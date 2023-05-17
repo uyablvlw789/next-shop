@@ -1,3 +1,4 @@
+// Option 1: fetch products on the server side
 import Head from "next/head";
 import Title from "../components/Title";
 
@@ -11,6 +12,15 @@ const products = [
     title: "Second product",
   },
 ];
+
+export async function getStaticProps() {
+  console.log("HomePage getStaticProps");
+  const response = await fetch("http://170.64.158.149:1338/api/products");
+  const products = await response.json();
+  return {
+    props: products,
+  };
+}
 
 function HomePage() {
   console.log("[HomePage] rendered", products);
